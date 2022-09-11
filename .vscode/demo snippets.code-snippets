@@ -1,0 +1,51 @@
+{
+	"dll reference": {
+		"body": [
+			"<ItemGroup>",
+			"\t<Reference Include=\"TestLibrary\">",
+			"\t\t<HintPath>./techdays2022-lib.dll</HintPath>",
+			"\t</Reference>",
+			"</ItemGroup>"
+		],
+		"prefix": "dllref"
+	},
+	"function code": {
+		"body": [
+			"using System;",
+			"using System.IO;",
+			"using System.Threading.Tasks;",
+			"using Microsoft.AspNetCore.Mvc;",
+			"using Microsoft.Azure.WebJobs;",
+			"using Microsoft.Azure.WebJobs.Extensions.Http;",
+			"using Microsoft.AspNetCore.Http;",
+			"using Microsoft.Extensions.Logging;",
+			"using Newtonsoft.Json;",
+			"using techdays2022_lib;",
+			"",
+			"namespace bc.techdays",
+			"{",
+			"\tpublic static class GetBCTechConferenceRating",
+			"\t{",
+			"\t\t[FunctionName(\"GetBCTechConferenceRating\")]",
+			"\t\tpublic static async Task<IActionResult> Run(",
+			"\t\t\t[HttpTrigger(AuthorizationLevel.Function, \"get\", \"post\", Route = null)] HttpRequest req,",
+			"\t\t\tILogger log)",
+			"\t\t{",
+			"\t\t\tlog.LogInformation(\"C# HTTP trigger function processed a request.\");",
+			"",
+			"\t\t\tstring conferenceName = req.Query[\"conferenceName\"];",
+			"",
+			"\t\t\tvar techConfLib = new TechConferenceLib();",
+			"",
+			"\t\t\tstring responseMessage = string.IsNullOrEmpty(conferenceName)",
+			"\t\t\t\t? \"This HTTP triggered function executed successfully. Pass a conferenceName in the query string for a personalized response.\"",
+			"\t\t\t\t: $\"The BC tech conference rating for {conferenceName} is {techConfLib.GetBCTechConferenceRating(conferenceName)}.\";",
+			"",
+			"\t\t\treturn new OkObjectResult(responseMessage);",
+			"\t\t}",
+			"\t}",
+			"}"
+		],
+		"prefix": "funccode"
+	}
+}
